@@ -1,0 +1,418 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+@import "spec/tacular";
+
+$gtMobile: (
+  columns: 12,
+  gutter: 1rem,
+  media: 641px,
+);
+
+$mobile: (
+  columns: 12,
+  gutter: 1rem,
+  media: '(max-width: 640px)',
+);
+
+
+$blue: #6799FF;
+$lightGray: #fafafa;
+$black: #373a36; // dark dark dark dark gray
+
+* {
+  box-sizing: border-box;
+}
+
+@mixin visually-hidden() { /*https://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html*/
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding:0 !important;
+    border:0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden;
+    body:hover & {
+      a, input, button {
+        display: none !important;
+      }
+    }
+}
+
+%clickable {
+  cursor: pointer;
+}
+
+@mixin button() {
+  background: var(--button-bg, #fff);
+  box-shadow: 0 0 0 1px var(--border-color, #e4e4e4);
+  color: var(--button-color, #555);
+  border: 0;
+  border-radius: .25em;
+  padding: .5em .5em;
+  font-size: 1.1em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  &:hover {
+    box-shadow: 0 0 0 1px var(--border-color, #373a36);
+    color: #373a36;
+  }
+}
+
+%visually-hidden {
+  @include visually-hidden;
+}
+
+%legible {
+  max-width: 42em;
+}
+
+body {
+  margin: 0;
+  position: relative;
+}
+
+/* System Fonts as used by Medium and WordPress */
+body {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+button {
+  @extend %clickable;
+  @include button;
+}
+
+#main-nav {
+  @include grid-media($gtMobile) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+#root {
+
+}
+
+#main-nav {
+  background: $blue;
+  color: white;
+  text-align: center;
+  padding: 0 1rem;
+
+  font-size: 1.2rem;
+  line-height:2;
+
+  &:target {
+    @include grid-media($mobile) {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      > * {
+        &.app-nav-main, &.app-nav-sub {
+          display: block;
+        }
+      }
+    }
+
+
+
+  }
+
+  &:not(:target) {
+    > * {
+      &.app-nav-main, &.app-nav-sub {
+        @include grid-media($mobile) {
+          @include visually-hidden;
+        }
+      }
+    }
+  }
+
+  @include grid-media($gtMobile) {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 1rem;
+    display: flex;
+    line-height: 2.5rem;
+    height: 2.5rem;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  > * {
+
+
+
+    @include grid-media($gtMobile) {
+      display: inline-block;
+      flex: 0 0 12em;
+
+      &.app-nav-main, &.app-nav-sub {
+        display: inline-block;
+      }
+
+      &.app-nav-main {
+        float: left;
+        order: 1;
+        text-align: left;
+      }
+      &.app-nav-sub {
+        float: right;
+        text-align: right;
+        order: 3;
+      }
+      &.logo {
+        order: 2;
+        transform: translateY(.3rem);
+      }
+    }
+  }
+
+  > .logo {
+    margin-left: auto;
+    margin-right: auto;
+
+
+  }
+
+  ul {
+    list-style-type: none;
+    li {
+      @include grid-media($gtMobile) {
+        display: inline-block;
+      }
+    }
+  }
+  a {
+    color: currentColor;
+  }
+}
+
+input:target {
+  outline: 2px solid $blue;
+  outline-offset: 4px;
+}
+
+#toc { // section#fold > #toc
+  background: $lightGray;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  position: relative;
+  @include grid-media($gtMobile) {
+    padding-top: 2rem;
+    overflow-y: auto;
+    width: 20vw;
+    max-width: 20em;
+    @include grid-column(4);
+    margin-left: 0; // is there a better way to do this with the Neat API?
+    //@include grid-collapse();
+    > * {
+      height: 300vh;
+      &:nth-of-type(even) {
+        background: darken($lightGray, 20%);
+      }
+    }
+    /*> .toc-toggle {
+      height: auto;
+      width: 30px;
+      height: 100px;
+      background: white;
+      border: 1px solid $lightGray;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }*/
+  }
+
+  details {
+    margin-bottom: 1rem;
+  }
+
+}
+
+h1 {
+  transition: color 240ms ease;
+  outline: 2px solid $blue;
+  outline-offset: .5rem;
+  outline-color: transparent;
+}
+
+main[id="content"] {
+  p {
+    line-height: 1.8;
+    font-size: 1.2em;
+  }
+  &:target {
+    h1 {
+      outline-color: $blue;
+      color: $blue;
+    }
+  }
+}
+
+
+
+html, body {
+  @include grid-media($gtMobile) {
+    overflow-y: hidden;
+  }
+}
+
+a {
+  color: $blue;
+  html.js & {
+    text-decoration: none;
+  }
+}
+
+.subtle {
+  &:not(:hover), &:not(:focus), &:not(:active) {
+    color: currentColor;
+  }
+}
+
+footer[role="contentinfo"] {
+  border-top:2px solid #BCBFC3;
+  padding-top: 1rem;
+  @extend %legible;
+  @include grid-media($gtMobile) {
+    display: flex;
+  }
+  .subtle {
+    &:hover {
+      color: $blue;
+    }
+  }
+  fieldset {
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+    legend {
+      @extend %visually-hidden;
+    }
+    .icon {
+      font-size: 1.4rem;
+      transform: translateY(.25rem);
+      fill: #bcbfc3;
+    }
+  }
+  .icon-star {
+    display: none;
+  }
+  label {
+
+  }
+  input[type="radio"] {
+    @extend %visually-hidden;
+    &:checked, &.filled {
+      + label {
+       .icon-star {
+         display: inline-block;
+       }
+       .icon-star-o {
+         display: none;
+       }
+     }
+    }
+  }
+  form.rate-this {
+    margin-right: 3rem;
+    label {
+      position: relative;
+    }
+    span {
+      @extend %visually-hidden;
+    }
+    + p {
+      @include grid-media($gtMobile) {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+label[for="star-rating"] {
+  @extend %visually-hidden;
+}
+
+aside {
+  > a {
+    &[href="#content"] {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      margin-bottom: 1rem;
+      @include grid-media($gtMobile) {
+        display: none; // #janky?
+      }
+    }
+  }
+}
+
+#fold {
+  > * {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @include grid-media($gtMobile) {
+    @include grid-container();
+    //transform: translateY(2.5rem);
+    margin-top: 2.5rem;
+    height: calc(100vh - 2.5rem);
+    > * {
+      overflow-y: auto;
+      height: calc(100vh - 2.5rem);
+    }
+
+  }
+}
+
+#stage {
+  padding-bottom: 1rem;
+  @include grid-media($gtMobile) {
+    padding-left: 0;
+    padding-right: 0;
+    width: 80vw;
+    @include grid-column(8);
+    padding-top: 3rem;
+    padding-left: 4vw;
+  }
+}
+
+svg.icon {
+  max-width: 1em;
+  max-height: 1em;
+}
+
+main {
+  @extend %legible;
+  header {
+    border-bottom: 2px solid #BCBFC3;
+    margin-bottom: 1rem;
+    p { // ETA
+      color: #c4c5c8;
+      font-weight: 300;
+    }
+    strong {
+      font-weight: 500;
+    }
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+#fold {
+  display: flex;
+}
+
+#stage { // #fold > *
+  flex-grow: 1;
+}

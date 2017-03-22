@@ -1,0 +1,35 @@
+{
+  "name": "fledgling",
+  "version": "0.0.0",
+  "authors": [
+    "JP DeVries <mail@devries.jp>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bourbon": "~4.3.3",
+    "neat": "~2.0.0",
+    "spectacular": "~0.0.0"
+  },
+  "exportsOverride": {
+    "bourbon": {
+      "": "app/assets/stylesheets/"
+    },
+    "neat": {
+      "": "core/"
+    },
+    "spectacular": {
+      "": "app/assets/stylesheets/"
+    }
+  }
+}
