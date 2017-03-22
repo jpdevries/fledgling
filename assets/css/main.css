@@ -270,6 +270,9 @@ main header {
 main h1 {
   font-size: 2.5rem; }
 
+main > div > p:first-child {
+  margin-top: 0; }
+
 #fold {
   display: flex; }
 

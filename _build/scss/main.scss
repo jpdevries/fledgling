@@ -407,6 +407,11 @@ main {
   h1 {
     font-size: 2.5rem;
   }
+  > div {
+    > p:first-child {
+      margin-top:0;
+    }
+  }
 }
 
 #fold {
